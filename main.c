@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 	addNode(200, list);
 	addNode(9042, list);
 	printList(list);
-
+	printf("Count: %d\n", List_count(list));
 
     return EXIT_SUCCESS;
 }

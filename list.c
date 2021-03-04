@@ -10,7 +10,7 @@
 * Return: point of type LIST
 */
 LIST *listCreate(void) {
-	return malloc(sizeof(LIST));
+	return calloc(1, sizeof(LIST));
 }
 
 /*
@@ -20,7 +20,7 @@ LIST *listCreate(void) {
 * Return: void
 */
 void addNode(int data, LIST *list) {
-    LISTITEM *node = (LISTITEM *)malloc(sizeof(LISTITEM));
+    LISTITEM *node = (LISTITEM *)calloc(1, sizeof(LISTITEM));
 	assert(node != NULL);
 	node->data = data;
 	

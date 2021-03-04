@@ -13,7 +13,7 @@ typedef struct list {
     struct listitem *last;
 } LIST;
 
-#define List_count(A) ((A)->count
+#define List_count(A) ((A)->count)
 #define LIST_FOREACH(L, S, M, V) \
 		LISTITEM *_node = NULL; \
 		LISTITEM *V = NULL; \
