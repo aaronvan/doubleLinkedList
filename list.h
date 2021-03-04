@@ -4,7 +4,7 @@
 typedef struct listitem {
     struct listitem *next;
     struct listitem *prev;
-    int data;
+    void *data;
 } LISTITEM;
 
 typedef struct list {
@@ -14,13 +14,15 @@ typedef struct list {
 } LIST;
 
 #define List_count(A) ((A)->count)
-#define LIST_FOREACH(L, S, M, V) \
-		LISTITEM *_node = NULL; \
-		LISTITEM *V = NULL; \
+
+#define FOREACH(L, S, M, V) \
+		LISTITEM *_node; \
+		LISTITEM *V; \
 for(V = _node = L->S; _node != NULL; V = _node = _node->M)
 
 LIST *listCreate(void);
-void addNode(int data, LIST *);
+void addNode(void *data, LIST *);
+void clearList(LIST *);
 void printList(LIST *);
 
 #endif /* list.h */

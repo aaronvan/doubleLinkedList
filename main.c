@@ -4,16 +4,13 @@
 #include "list.c"
 
 int main(int argc, char *argv[]) {
-    LIST *list = listCreate();
+    LIST *records = listCreate();
+    for (size_t i = 0; i <= 3; i++) {
+		addNode((int *)i, records);
+	}
+	printList(records);
+	printf("Count: %d\n", List_count(records));
+	clearList(records);
 	
-	addNode(88, list);
-	addNode(429, list);
-	addNode(200, list);
-	addNode(4, list);
-	addNode(200, list);
-	addNode(9042, list);
-	printList(list);
-	printf("Count: %d\n", List_count(list));
-
     return EXIT_SUCCESS;
 }

@@ -19,7 +19,7 @@ LIST *listCreate(void) {
 * Args: integer data, list
 * Return: void
 */
-void addNode(int data, LIST *list) {
+void addNode(void *data, LIST *list) {
     LISTITEM *node = (LISTITEM *)calloc(1, sizeof(LISTITEM));
 	assert(node != NULL);
 	node->data = data;
@@ -27,6 +27,7 @@ void addNode(int data, LIST *list) {
 	if (list->last == NULL) {
 		list->first = node;
 		list->last = node;
+		node->prev = (LISTITEM *)&list;
 	} else {
 		list->last->next = node;
 		node->prev = list->last;
@@ -36,13 +37,25 @@ void addNode(int data, LIST *list) {
 }
 
 /*
+* clearList
+* Purpose: clears the value in each record but not the record itself
+* Args: pointer to LIST
+* Return: void
+*/
+void clearList(LIST *list) {
+	FOREACH(list, first, next, temp) {
+		free(temp->data);
+	}
+}
+
+/*
  * printList
  * Purpose: print the data fields of each list element
  * Args: pointer to list
  * Return: void
  */
 void printList(LIST *list) {
-	LIST_FOREACH(list, first, next, temp) {
+	FOREACH(list, first, next, temp) {
 		printf("address: %p\tdata: %d\n", temp, temp->data);
 	}
 }
