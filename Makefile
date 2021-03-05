@@ -3,13 +3,15 @@ SRCDIR	= src
 BINDIR	= bin
 MKDIR	= mkdir -pv
 RM		= rm -rfv
-
-CFLAGS = -Wall -g -std=c17 -pedantic -Iinclude
+VERIFY	= cat -e -t -v Makefile
+CFLAGS = -Wall -g -std=c17 -pedantic -Iinclude -Werror -DNDEBUG
 
 # executable
-_BIN = a.out
-BIN = $(addprefix $(BINDIR)/, $(_BIN))
+_EXE = a.out
+# expand to: bin/a.out
+BIN = $(addprefix $(BINDIR)/,$(_EXE))
 
+# default recipe
 .PHONY: all
 all:
 	$(MKDIR) $(BINDIR)
@@ -19,3 +21,10 @@ all:
 clean:
 	@echo "Cleaning up..."
 	$(RM) $(BINDIR)
+
+.PHONY: verify
+verify:
+	$(VERIFY)
+
+print-%:
+	@echo $* = $($*)
