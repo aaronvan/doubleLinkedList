@@ -1,6 +1,8 @@
 /* list.c */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include "list.h"
 
 /*
@@ -19,7 +21,7 @@ LIST *listCreate(void) {
 * Args: integer data, list
 * Return: void
 */
-void addNode(void *data, LIST *list) {
+void addNode(int data, LIST *list) {
     LISTITEM *node = (LISTITEM *)calloc(1, sizeof(LISTITEM));
 	assert(node != NULL);
 	node->data = data;
@@ -37,18 +39,6 @@ void addNode(void *data, LIST *list) {
 }
 
 /*
-* clearList
-* Purpose: clears the value in each record but not the record itself
-* Args: pointer to LIST
-* Return: void
-*/
-void clearList(LIST *list) {
-	FOREACH(list, first, next, temp) {
-		free(temp->data);
-	}
-}
-
-/*
  * printList
  * Purpose: print the data fields of each list element
  * Args: pointer to list
@@ -56,6 +46,6 @@ void clearList(LIST *list) {
  */
 void printList(LIST *list) {
 	FOREACH(list, first, next, temp) {
-		printf("address: %p\tdata: %d\n", temp, temp->data);
+		printf("data: %d\n", temp->data);
 	}
 }
