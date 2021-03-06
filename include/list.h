@@ -21,7 +21,7 @@ typedef struct list {
 for(V = _node = L->S; _node != NULL; V = _node = _node->M)
 
 LIST *listCreate(void);
-void addNode(int data, LIST *);
+void addNode(int, LIST *);
 void printList(LIST *);
 
 #endif /* list.h */
