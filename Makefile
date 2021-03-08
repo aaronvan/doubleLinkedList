@@ -1,24 +1,24 @@
 CC		= gcc
-BINDIR	= bin
-OBJDIR	= obj
+SDIR	= src
+#BDIR	= bin
+ODIR	= obj
 MKDIR	= mkdir -pv
 RM		= rm -rfv
-CFLAGS	= -Wall -Iinclude -std=c17 -pedantic -Werror -DNDEBUG
+INC		= -Iinclude
+CFLAGS	= -Wall
+#SRC	= $(wildcard $(SRCDIR)/*.c)
+_OBJS	= list.o main.o
+OBJS	= $(patsubst %, $(ODIR)/%, $(_OBJS))
 
-OBJECTS = list.o main.o
-
-# executable
-_BIN = a.out
-BIN = $(addprefix $(BINDIR)/, $(_BIN))
+# compiling
+$(ODIR)/%.o: $(SDIR)/%.c
+	$(CC) -c $(INC) -o $@ $< $(CFLAGS)
 
 # linking
-$(BIN): $(OBJECTS) $(BINDIR)
-	$(CC) $(OBJECTS) -o $@
-
-$(BINDIR):
-	$(MKDIR) $(BINDIR)
+a.out: $(OBJS)
+	$(CC) $(OBJS) -o $@
 
 .PHONY: clean
 clean:
 	@echo Cleaning up...
-	$(RM) $(BINDIR)
+	$(RM) $(ODIR)/*.o a.out
