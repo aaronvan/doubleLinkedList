@@ -1,24 +1,31 @@
+SHELL	= /bin/zsh
+.SUFFIXES:
+.SUFFIXES: .c .h .o
+
 CC		= gcc
 SDIR	= src
-#BDIR	= bin
+BDIR	= bin
 ODIR	= obj
 MKDIR	= mkdir -pv
 RM		= rm -rfv
 INC		= -Iinclude
-CFLAGS	= -Wall
-#SRC	= $(wildcard $(SRCDIR)/*.c)
-_OBJS	= list.o main.o
-OBJS	= $(patsubst %, $(ODIR)/%, $(_OBJS))
+CFLAGS	= -Wall -std=c17 -pedantic
+SRC		= $(wildcard $(SDIR)/*.c)
 
-# compiling
-$(ODIR)/%.o: $(SDIR)/%.c
-	$(CC) -c $(INC) -o $@ $< $(CFLAGS)
 
-# linking
-a.out: $(OBJS)
-	$(CC) $(OBJS) -o $@
+_BIN 	= a.out
+BIN		= $(addprefix $(BDIR)/, $(_BIN))
+
+.PHONY: all
+all: $(BDIR) $(BIN)
+
+$(BIN): $(SRC)
+	$(CC) $(INC) $^ -o $@
+
+$(BDIR):
+	$(MKDIR) $(BDIR)
 
 .PHONY: clean
 clean:
 	@echo Cleaning up...
-	$(RM) $(ODIR)/*.o a.out
+	$(RM) $(BDIR)
