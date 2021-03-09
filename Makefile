@@ -1,38 +1,40 @@
-CC		= gcc
-SDIR	= src
-BDIR	= bin
-ODIR	= obj
-MKDIR	= mkdir -pv
-RM		= rm -rfv
-INC		= -Iinclude
-CFLAGS	= -Wall -std=c17 -pedantic -Werror -DNDBUG
-SRC		= $(wildcard $(SDIR)/*.c)
-OBJS	= $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SRC))
+CC      = gcc
+BINDIR  = bin
+OBJDIR  = obj
+SRCDIR  = src
+MKDIR   = mkdir -p
+RM      = rm -rf
+VERIFY	= cat -e -t -v Makefile
+SRC     = $(wildcard $(SRCDIR)/*.c)
+OBJS   	= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
+CFLAGS  = -Wall -g -Iinclude -std=c17 -pedantic -Werror -DNDEBUG
 
-_BIN 	= a.out
-BIN		= $(addprefix $(BDIR)/, $(_BIN))
+_BIN    = a.out
+BIN     = $(addprefix $(BINDIR)/, $(_BIN))
 
 .PHONY: all
-all: $(OBJS) $(BIN)
+all: $(BINDIR) $(OBJDIR) $(BIN)
 
-# compiling
-$(OBJS): $(SRC) $(ODIR)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+$(BIN): $(OBJS) $(BINDIR)
+	$(CC) -o $@ $(CFLAGS) $(OBJS)
 
-$(ODIR):
-	$(MKDIR) $(ODIR)
+$(BINDIR):
+	$(MKDIR) $(BINDIR)
 
-# linking
-$(BIN): $(OBJS) $(BDIR)
-	$(CC) $< -o $@ 
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BDIR):
-	$(MKDIR) $(BDIR)
+$(OBJDIR):
+	$(MKDIR) $(OBJDIR)
 
 .PHONY: clean
 clean:
-	@echo Cleaning up...
-	$(RM) $(ODIR) $(BDIR)
+	@echo "Cleaning up..."
+	$(RM) $(OBJDIR) $(BINDIR)
+
+.PHONY: verify
+verify:
+	$(VERIFY)
 
 # macro review
 print-%:
