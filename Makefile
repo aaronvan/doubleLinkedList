@@ -1,7 +1,3 @@
-SHELL	= /bin/zsh
-.SUFFIXES:
-.SUFFIXES: .c .h .o
-
 CC		= gcc
 SDIR	= src
 BDIR	= bin
@@ -9,24 +5,26 @@ ODIR	= obj
 MKDIR	= mkdir -pv
 RM		= rm -rfv
 INC		= -Iinclude
-CFLAGS	= -Wall -std=c17 -pedantic
+CFLAGS	= -Wall -std=c17 -pedantic -Werror -DNDBUG
 SRC		= $(wildcard $(SDIR)/*.c)
+OBJS	= $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SRC))
 
 _BIN 	= a.out
 BIN		= $(addprefix $(BDIR)/, $(_BIN))
 
 .PHONY: all
-all: $(BDIR) $(BIN)
+all: $(OBJS) $(BIN)
 
-$(BIN): $(SRC)
-	$(CC) $(INC) $^ -o $@
+# compiling
+$(OBJS): $(SRC) $(ODIR)
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 $(ODIR):
 	$(MKDIR) $(ODIR)
 
 # linking
-a.out: $(OBJS)
-	$(CC) $(OBJS) -o $@
+$(BIN): $(OBJS) $(BDIR)
+	$(CC) $< -o $@ 
 
 $(BDIR):
 	$(MKDIR) $(BDIR)
@@ -34,4 +32,8 @@ $(BDIR):
 .PHONY: clean
 clean:
 	@echo Cleaning up...
-	$(RM) $(BDIR)
+	$(RM) $(ODIR) $(BDIR)
+
+# macro review
+print-%:
+	@echo $* = $($*)
