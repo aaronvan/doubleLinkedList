@@ -14,6 +14,9 @@ OBJS	= $(patsubst %, $(ODIR)/%, $(_OBJS))
 $(ODIR)/%.o: $(SDIR)/%.c
 	$(CC) -c $(INC) -o $@ $< $(CFLAGS)
 
+$(ODIR):
+	$(MKDIR) $(ODIR)
+
 # linking
 a.out: $(OBJS)
 	$(CC) $(OBJS) -o $@
