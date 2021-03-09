@@ -15,12 +15,14 @@ BIN     = $(addprefix $(BINDIR)/, $(_BIN))
 .PHONY: all
 all: $(BINDIR) $(OBJDIR) $(BIN)
 
+# link
 $(BIN): $(OBJS) $(BINDIR)
-	$(CC) -o $@ $(CFLAGS) $(OBJS)
+	$(CC) -o $@ $(OBJS)
 
 $(BINDIR):
 	$(MKDIR) $(BINDIR)
 
+# compile
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
