@@ -12,7 +12,6 @@ INC		= -Iinclude
 CFLAGS	= -Wall -std=c17 -pedantic
 SRC		= $(wildcard $(SDIR)/*.c)
 
-
 _BIN 	= a.out
 BIN		= $(addprefix $(BDIR)/, $(_BIN))
 
