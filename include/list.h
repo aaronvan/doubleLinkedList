@@ -13,15 +13,15 @@ typedef struct list {
     struct listitem *last;
 } LIST;
 
+LIST *listCreate(void);
+void addNode(int, LIST *);
+void printList(LIST *);
+
 #define List_count(A) ((A)->count)
 
 #define FOREACH(L, S, M, V) \
 		LISTITEM *_node; \
 		LISTITEM *V; \
 for(V = _node = L->S; _node != NULL; V = _node = _node->M)
-
-LIST *listCreate(void);
-void addNode(int, LIST *);
-void printList(LIST *);
 
 #endif /* list.h */
