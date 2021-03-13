@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	if (errno == ERANGE) {
 		perror("Bad number");
 		return EXIT_FAILURE;
-	} else if (endptr == buff || argc != 2) {
+	} else if (endptr == buff) {
 		puts("Nothing read.");
 		return EXIT_FAILURE;
 	} else if (*endptr && *endptr != '\n') {
